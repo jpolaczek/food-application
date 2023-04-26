@@ -93,10 +93,20 @@ GEM
     debug (1.7.2)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    diff-lcs (1.5.0)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     erubis (2.7.0)
     execjs (2.8.1)
     ffi (1.15.5)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     globalid (1.1.0)
       activesupport (>= 5.0)
     haml (6.1.1)
@@ -113,6 +123,14 @@ GEM
       haml (>= 4.0)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
+    http (5.1.1)
+      addressable (~> 2.8)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.4.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.6)
@@ -124,6 +142,9 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    llhttp-ffi (0.4.0)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -194,6 +215,23 @@ GEM
     reline (0.3.3)
       io-console (~> 0.5)
     rexml (3.2.5)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-rails (6.0.1)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.11)
+      rspec-expectations (~> 3.11)
+      rspec-mocks (~> 3.11)
+      rspec-support (~> 3.11)
+    rspec-support (3.12.0)
     ruby_parser (3.20.0)
       sexp_processor (~> 4.16)
     rubyzip (2.3.2)
@@ -229,6 +267,9 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -255,13 +296,16 @@ DEPENDENCIES
   bootstrap
   capybara
   debug
+  dotenv-rails
   haml-rails
   html2haml
+  http
   importmap-rails
   jbuilder
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rspec-rails (~> 6.0.0)
   sassc-rails
   selenium-webdriver
   sprockets-rails

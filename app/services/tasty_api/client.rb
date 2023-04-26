@@ -1,33 +1,38 @@
 require 'uri'
 require 'net/http'
+require 'http'
 
 module TastyApi
     class Client
-        SIZE = 39
+        SIZE = 40
         HOST = 'tasty.p.rapidapi.com'.freeze
-        PATH = '/recipes/list'.freeze
+        RECIPIES_PATH = '/recipes/list'.freeze
+
+        PATHS = {
+            recipies_list: '/recipes/list'
+        }
         
-        private_constant :SIZE, :HOST
+        private_constant :SIZE, :HOST, :RECIPIES_PATH
 
-        class << self
-            def get_recipies(query: nil, from: 0)
-                uri = URI('https://' + HOST + PATH)
-                uri.query = URI.encode_www_form({from: from, q: query})
-
-                http = Net::HTTP.new(uri.host, uri.port)
-                http.use_ssl = true
-
-                request = Net::HTTP::Get.new(uri)
-                request["X-RapidAPI-Key"] = '0ca35fcb06mshc6e508c246f8688p180a96jsn803cde04515a'
-                request["X-RapidAPI-Host"] = HOST
-
-                response = http.request(request)
-            end
-
-            def set_uri
-
-            end
-
+        def initialize(path)
+            @path = path
         end
+
+        def get_many(query: '', from: 0)
+            begin
+                JSON(HTTP.headers({
+                    "X-RapidAPI-Key" => ENV['TASTY_API_KEY'],
+                    "X-RapidAPI-Host" => HOST
+                }).get('https://' + HOST + path, :params => {from: from, q: query, size: SIZE}).to_s)
+            rescue HTTP::Error, HTTP::ConnectionError, HTTP::RequestError, HTTP::ResponseError, 
+                HTTP::StateError, HTTP::TimeoutError, HTTP::ConnectTimeoutError, HTTP::HeaderError => e
+                puts e.message
+                { errors: e.message }
+            end
+        end
+
+        private
+
+        attr_reader :path
     end
 end
