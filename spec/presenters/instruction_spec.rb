@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Presenters::InstructionStep do
+RSpec.describe Presenters::Instruction do
     subject { described_class.new(json_object)}
 
     let(:json_object) do

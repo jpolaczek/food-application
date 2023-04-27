@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   root "home#index"
-  post :search, controller: :home
+  get :search, controller: :home
+  
+  resources :recipes, only: [:new, :create]
 end

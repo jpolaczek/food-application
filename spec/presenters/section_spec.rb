@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Presenters::IngredientSection do
+RSpec.describe Presenters::Section do
     subject { described_class.new(json_object)}
 
     let(:json_object) do
@@ -18,6 +18,6 @@ RSpec.describe Presenters::IngredientSection do
 
     it 'creates ingredient sections presenter object', :aggreate_errors do
         expect(subject.name).to eq name
-        expect(subject.ingredients).to eq ingredients
+        expect(subject.components).to eq ingredients
     end
 end

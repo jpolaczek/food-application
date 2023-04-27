@@ -1,5 +1,5 @@
 module Presenters
-    class InstructionStep
+    class Instruction
         attr_reader :display_text, :position
 
         def initialize(json_object)
