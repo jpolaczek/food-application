@@ -1,28 +1,24 @@
 %h1
     Your new recipe!
-= form_for :recipe, url: recipes_path, method: :post do |form|
+= form_for @recipe, url: recipes_path, method: :post do |form|
     .form-group
         = form.label :name
-        = form.text_field :name, value: @recipe.name, style: "margin-top: 10px", class: "form-control"
+        = form.text_field :name, style: "margin-top: 10px", class: "form-control"
     .form-group
         = form.label :description
-        = form.text_area :description, value: @recipe.description, style: "margin-top: 10px", class: "form-control"
+        = form.text_area :description, style: "margin-top: 10px", class: "form-control"
     %h3
         Ingredients: 
         = form.fields_for :sections do |section_form|
-            - @recipe.sections.each_with_index do |section, index|
-                %h6=section.name
-                = section_form.hidden_field :name, multiple: true, value: section.name, id: index
-                = section_form.fields_for :ingredients do |ingredient_form|
-                    - section.components.each_with_index do |ingredient, index|
-                        .form-group
-                            = section_form.text_field :raw_text, value: ingredient.raw_text, class: "form-control", style: "margin-top: 10px", multiple: true, id: index
+            = section_form.text_field :name
+            = section_form.fields_for :components do |component_form|
+                .form-group
+                    = component_form.text_field :raw_text, class: "form-control", style: "margin-top: 10px"
     %h3
         Instructions:    
-    - @recipe.instructions.each_with_index do |instruction, index|
+    = form.fields_for :instructions do |instruction_form|
         .form-group
-            %p= "Step #{index+1}"
-            = form.text_area :display_text, value: instruction.display_text, class: "form-control form-control-sm", style: "margin-top: 10px"
-            = form.hidden_field :position, value: instruction.position 
+            = instruction_form.text_area :display_text, class: "form-control form-control-sm", style: "margin-top: 10px"
+            = instruction_form.hidden_field :position
     = form.submit 'Save', class: "btn btn-primary mb-2 my-2 my-sm-0"
 

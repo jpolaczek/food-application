@@ -8,12 +8,12 @@ class HomeController < ApplicationController
         if @json_response["errors"]
             @errors = @json_response["errors"]
         else
-            @list = Presenters::RecipeList.new(@json_response["results"], @json_response["count"])
+            @recipes = Builders::RecipeList.call(@json_response["results"])
         end
     end
 
     def show_recipe
-        @recipe = Presenters::Recipe.new(JSON params['recipe'])
+        @recipe = Builders::Recipe.new(JSON params['recipe'])
     end
 
     private
