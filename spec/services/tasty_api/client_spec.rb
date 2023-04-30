@@ -48,7 +48,7 @@ RSpec.describe TastyApi::Client do
         end
 
         it 'catches error and returns message wrapped in a hash' do
-            expect(subject).to eq({ 'errors': "example_error"})
+            expect(subject).to eq({ 'errors' => "example_error"})
         end
     end
 end

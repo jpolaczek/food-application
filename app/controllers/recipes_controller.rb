@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-    before_action :load_recipe, only: [:show, :edit, :update]
+    before_action :load_recipe, only: [:show, :edit]
 
     def new
         @recipe = Builders::Recipe.call(JSON params['recipe'])
@@ -20,11 +20,16 @@ class RecipesController < ApplicationController
     end
 
     def update
-        if @recipe.update(recipe_params)
+        if current_user.recipes.find(params[:id]).update(recipe_params)
             redirect_to recipe_path(@recipe), notice: 'Recipe updated'
         else
             render :edit
         end
+    end
+
+    def destroy
+        current_user.recipes.find(params[:id]).destroy
+        redirect_to root_path
     end
 
     private

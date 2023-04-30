@@ -50,6 +50,7 @@ gem 'html2haml'
 gem 'http'
 gem "factory_bot", "~> 6.2"
 gem 'devise'
+gem 'kaminari'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -76,4 +77,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers', '~> 5.0'
 end

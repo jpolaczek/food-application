@@ -4,4 +4,8 @@ class Recipe < ApplicationRecord
     belongs_to :user
 
     accepts_nested_attributes_for :sections, :instructions
+
+    paginates_per 2
+
+    validates :name, presence: true
 end
