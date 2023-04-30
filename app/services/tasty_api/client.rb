@@ -26,8 +26,7 @@ module TastyApi
                 }).get('https://' + HOST + path, :params => {from: from, q: query, size: SIZE}).to_s)
             rescue HTTP::Error, HTTP::ConnectionError, HTTP::RequestError, HTTP::ResponseError, 
                 HTTP::StateError, HTTP::TimeoutError, HTTP::ConnectTimeoutError, HTTP::HeaderError => e
-                puts e.message
-                { errors: e.message }
+                { 'errors' => e.message }
             end
         end
 

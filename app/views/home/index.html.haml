@@ -1,0 +1,10 @@
+%h3
+    Your recipes:
+- @recipes.each do |recipe|
+    .card
+        .card-body
+            %h5.card-title
+                = link_to recipe.name, recipe_path(recipe)
+            = link_to "Edit", edit_recipe_path(recipe), class: 'btn btn-primary'   
+            %p.card-text
+                = recipe.description

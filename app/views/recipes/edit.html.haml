@@ -1,0 +1,5 @@
+%h1
+    Your saved recipe!
+= form_for @recipe, url: recipe_path(@recipe), method: :patch do |form|
+    = render "form", form: form
+

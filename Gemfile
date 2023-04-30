@@ -49,7 +49,7 @@ gem 'haml-rails'
 gem 'html2haml'
 gem 'http'
 gem "factory_bot", "~> 6.2"
-gem 'faker'
+gem 'devise'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

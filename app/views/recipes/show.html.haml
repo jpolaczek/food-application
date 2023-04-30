@@ -1,0 +1,19 @@
+%h2
+    = @recipe.name
+= link_to "Edit", edit_recipe_path(@recipe), class: 'btn btn-primary' 
+%p
+    = @recipe.description
+- @recipe.sections.each_with_index do |section, index|
+    %ul.list-group
+        = "Ingredient section #{index + 1} #{section.name}"
+        - section.components.each do |component|
+            - next if component.raw_text.blank?
+            %li.list-group-item
+                = component.raw_text
+%ul.list-group
+    %h3
+        Instructions
+    - @recipe.instructions.positioned.each do |instruction|
+        %li.list-group-item
+            = instruction.display_text
+

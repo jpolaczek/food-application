@@ -1,19 +1,18 @@
 class HomeController < ApplicationController
     def index
+        @recipes = current_user.recipes
     end
 
     def search
-        @json_response = tasty_client.get_many(query: params[:search], from: params[:from])
-
-        if @json_response["errors"]
-            @errors = @json_response["errors"]
-        else
-            @recipes = Builders::RecipeList.call(@json_response["results"])
+        @json_response = Rails.cache.fetch(params[:search], expires_in: 30.minutes) do
+            tasty_client.get_many(query: params[:search], from: params[:from])
         end
-    end
 
-    def show_recipe
-        @recipe = Builders::Recipe.new(JSON params['recipe'])
+        if @json_response["results"]
+            @recipes = Builders::RecipeList.call(@json_response["results"])
+        else
+            flash[:error] = "Errors encountered: " + [@json_response["errors"].to_s + @json_response["message"].to_s].join(", ")
+        end
     end
 
     private

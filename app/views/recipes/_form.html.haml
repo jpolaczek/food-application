@@ -1,0 +1,20 @@
+.form-group
+    = form.label :name
+    = form.text_field :name, style: "margin-top: 10px", class: "form-control"
+.form-group
+    = form.label :description
+    = form.text_area :description, style: "margin-top: 10px", class: "form-control"
+%h3
+    Ingredients: 
+    = form.fields_for :sections do |section_form|
+        = section_form.text_field :name
+        = section_form.fields_for :components do |component_form|
+            .form-group
+                = component_form.text_field :raw_text, class: "form-control", style: "margin-top: 10px"
+%h3
+    Instructions:    
+= form.fields_for :instructions do |instruction_form|
+    .form-group
+        = instruction_form.text_area :display_text, class: "form-control form-control-sm", style: "margin-top: 10px"
+        = instruction_form.hidden_field :position
+= form.submit 'Save', class: "btn btn-primary mb-2 my-2 my-sm-0"
