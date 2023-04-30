@@ -6,3 +6,11 @@
                     = link_to recipe.name, new_recipe_path(recipe: recipe.to_json(include: { instructions: [], sections: { include: :components } }))
                 %p.card-text
                     = recipe.description
+    %nav
+        %ul.pagination
+            - if @current_page.to_i > 1
+                %li.page-item
+                    = link_to 'Previous', search_path({page: @current_page.to_i - 1, search: params[:search]}), class: 'page-link'
+            - if @pagination_calculator.next?(@json_response["count"])       
+                %li.page-item
+                    = link_to 'Next', search_path({page: @current_page.to_i + 1, search: params[:search]}), class: 'page-link'

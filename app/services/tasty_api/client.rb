@@ -12,7 +12,7 @@ module TastyApi
             recipies_list: '/recipes/list'
         }
         
-        private_constant :SIZE, :HOST, :RECIPIES_PATH
+        private_constant :HOST, :RECIPIES_PATH
 
         def initialize(path)
             @path = path

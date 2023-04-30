@@ -4,10 +4,12 @@ class HomeController < ApplicationController
     end
 
     def search
-        @json_response = Rails.cache.fetch(params[:search], expires_in: 30.minutes) do
-            tasty_client.get_many(query: params[:search], from: params[:from])
-        end
+        @pagination_calculator ||= PaginationCalculator.new(current_page)
 
+        @json_response = Rails.cache.fetch(params[:search] + current_page.to_s, expires_in: 30.minutes) do
+            tasty_client.get_many(query: params[:search], from: @pagination_calculator.calculate_from)
+        end
+        
         if @json_response["results"]
             @recipes = Builders::RecipeList.call(@json_response["results"])
         else
@@ -19,5 +21,9 @@ class HomeController < ApplicationController
 
     def tasty_client
         @tasty_client ||= TastyApi::Client.new(TastyApi::Client::PATHS[:recipies_list])
+    end
+
+    def current_page
+        @current_page ||= (params[:page] || 1).to_i
     end
 end
