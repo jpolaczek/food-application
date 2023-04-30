@@ -18,12 +18,14 @@ module TastyApi
             @path = path
         end
 
-        def get_many(query: '', from: 0)
+        def get_many(query: '', from: 0, current_page: '1')
             begin
-                JSON(HTTP.headers({
-                    "X-RapidAPI-Key" => ENV['TASTY_API_KEY'],
-                    "X-RapidAPI-Host" => HOST
-                }).get('https://' + HOST + path, :params => {from: from, q: query, size: SIZE}).to_s)
+                Rails.cache.fetch(query + current_page.to_s, expires_in: 30.minutes) do
+                    JSON(HTTP.headers({
+                        "X-RapidAPI-Key" => ENV['TASTY_API_KEY'],
+                        "X-RapidAPI-Host" => HOST
+                    }).get('https://' + HOST + path, :params => {from: from, q: query, size: SIZE}).to_s)
+                end
             rescue HTTP::Error, HTTP::ConnectionError, HTTP::RequestError, HTTP::ResponseError, 
                 HTTP::StateError, HTTP::TimeoutError, HTTP::ConnectTimeoutError, HTTP::HeaderError => e
                 { 'errors' => e.message }

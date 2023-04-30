@@ -1,14 +1,12 @@
 class HomeController < ApplicationController
+    before_action :pagination_calculator, only: [:search]
+
     def index
         @recipes = current_user.recipes.page params[:page]
     end
 
     def search
-        @pagination_calculator ||= PaginationCalculator.new(current_page)
-
-        @json_response = Rails.cache.fetch(params[:search] + current_page.to_s, expires_in: 30.minutes) do
-            tasty_client.get_many(query: params[:search], from: @pagination_calculator.calculate_from)
-        end
+        @json_response = tasty_client.get_many(query: params[:search], from: @pagination_calculator.calculate_from, current_page: current_page)
         
         if @json_response["results"]
             @recipes = Builders::RecipeList.call(@json_response["results"])
@@ -18,6 +16,10 @@ class HomeController < ApplicationController
     end
 
     private
+
+    def pagination_calculator
+        @pagination_calculator ||= PaginationCalculator.new(current_page)
+    end
 
     def tasty_client
         @tasty_client ||= TastyApi::Client.new(TastyApi::Client::PATHS[:recipies_list])

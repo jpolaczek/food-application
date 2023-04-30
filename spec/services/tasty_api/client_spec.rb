@@ -4,11 +4,12 @@ RSpec.describe TastyApi::Client do
     subject { client.get_many(query: query, from: from) }
 
     let(:client) { described_class.new(TastyApi::Client::PATHS[:recipies_list]) }
-    let(:query) { nil }
+    let(:query) { '' }
     let(:from) { 0 }
     let(:response) { File.read fixture_path + "/tasty_response.txt" }
     let(:http_double) { double 'http_client' }
     let(:expected_count) { 9681 }
+
 
     context 'when response is correct' do
         before do
