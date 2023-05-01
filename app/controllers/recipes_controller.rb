@@ -21,7 +21,7 @@ class RecipesController < ApplicationController
 
     def update
         if current_user.recipes.find(params[:id]).update(recipe_params)
-            redirect_to recipe_path(@recipe), notice: 'Recipe updated'
+            redirect_to recipe_path(params[:id]), notice: 'Recipe updated'
         else
             render :edit
         end
